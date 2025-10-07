@@ -135,6 +135,54 @@ console.log(second); // 2
 console.log(rest); // [3, 4, 5]
 ```
 
+##### **2.5 Array Iterator Methods**
+
+```javascript
+/**
+ * Array.prototype.keys() - Returns iterator for array indices
+ * @returns {Iterator} Iterator yielding array indices
+ */
+const arr = ['a', 'b', 'c'];
+const keysIterator = arr.keys();
+
+for (const key of keysIterator) {
+  console.log(key); // 0, 1, 2
+}
+
+// Convert to array
+Array.from(arr.keys()); // [0, 1, 2]
+
+/**
+ * Array.prototype.values() - Returns iterator for array values
+ * @returns {Iterator} Iterator yielding array values
+ */
+const valuesIterator = arr.values();
+
+for (const value of valuesIterator) {
+  console.log(value); // 'a', 'b', 'c'
+}
+
+// Convert to array
+Array.from(arr.values()); // ['a', 'b', 'c']
+
+/**
+ * Array.prototype.entries() - Returns iterator for [index, value] pairs
+ * @returns {Iterator} Iterator yielding [index, value] pairs
+ */
+const entriesIterator = arr.entries();
+
+for (const [index, value] of entriesIterator) {
+  console.log(`${index}: ${value}`); // '0: a', '1: b', '2: c'
+}
+
+// Convert to array
+Array.from(arr.entries()); // [[0, 'a'], [1, 'b'], [2, 'c']]
+
+// Practical use: Object.fromEntries with array
+const arrayToObject = Object.fromEntries(arr.entries());
+// {0: 'a', 1: 'b', 2: 'c'}
+```
+
 #### **3. Array Properties**
 
 ##### **3.1 Length Property**
@@ -181,6 +229,33 @@ arr[5] = 'f'; // ['a', 'B', 'c', 'd', 'e', 'f']
 
 // Negative indices don't work (unlike some languages)
 console.log(arr[-1]); // undefined
+```
+
+##### **4.2 at() Method (ES2022)**
+
+```javascript
+/**
+ * Array.prototype.at() - Accesses element at index, supports negative indices
+ * @param {number} index - Index to access (negative indices count from end)
+ * @returns {*} Element at specified index, or undefined if out of bounds
+ */
+const arr = ['a', 'b', 'c', 'd', 'e'];
+
+// Positive indices (same as bracket notation)
+arr.at(0); // 'a'
+arr.at(2); // 'c'
+
+// Negative indices (count from end)
+arr.at(-1); // 'e' (last element)
+arr.at(-2); // 'd' (second to last)
+
+// Out of bounds
+arr.at(10); // undefined
+arr.at(-10); // undefined
+
+// Comparison with bracket notation
+const lastElement = arr[arr.length - 1]; // 'e' (traditional way)
+const lastElementNew = arr.at(-1); // 'e' (modern way)
 ```
 
 ##### **4.2 Array Destructuring**
@@ -622,6 +697,28 @@ const sorted = numbers.toSorted(); // [1, 1, 3, 4, 5], original unchanged
  * @returns {Array} New reversed array
  */
 const reversed = numbers.toReversed(); // [5, 4, 1, 3, 1], original unchanged
+
+/**
+ * Array.prototype.toSpliced() - Returns new array with elements spliced (ES2023)
+ * @param {number} start - Index to start changing array
+ * @param {number} deleteCount - Number of elements to remove
+ * @param {...*} items - Elements to add
+ * @returns {Array} New array with changes applied
+ */
+const arr = [1, 2, 3, 4, 5];
+const spliced = arr.toSpliced(2, 2, 'a', 'b'); // [1, 2, 'a', 'b', 5]
+console.log(arr); // [1, 2, 3, 4, 5] (original unchanged)
+
+/**
+ * Array.prototype.with() - Returns new array with element replaced at index (ES2023)
+ * @param {number} index - Index to replace (supports negative indices)
+ * @param {*} value - New value to set
+ * @returns {Array} New array with element replaced
+ */
+const original = [1, 2, 3, 4, 5];
+const modified = original.with(2, 'a'); // [1, 2, 'a', 4, 5]
+const modifiedNegative = original.with(-1, 'z'); // [1, 2, 3, 4, 'z']
+console.log(original); // [1, 2, 3, 4, 5] (original unchanged)
 ```
 
 #### **9. Array Methods - Transformation**
