@@ -58,6 +58,14 @@ const fromISO = new Date('2023-10-04T12:30:45.123Z');
 
 // From date string (avoid using - browser dependent)
 const fromString = new Date('October 4, 2023 12:30:45');
+
+// Common date string patterns from user code
+let myCreatedDate = new Date("07-10-2025");
+console.log(myCreatedDate.toDateString());
+console.log(myCreatedDate.toTimeString());
+console.log(myCreatedDate.toLocaleString());
+console.log(myCreatedDate.getTimezoneOffset()); // Minutes difference from UTC
+console.log(typeof myCreatedDate); // "object"
 ```
 
 ##### **2.3 Parsing Date Strings**
@@ -120,6 +128,13 @@ date.getDate(); // 4
  * @returns {number} Day of week (0 = Sunday, 6 = Saturday)
  */
 date.getDay(); // 3 (Wednesday)
+
+// Common date component access patterns
+let newDate = new Date();
+console.log(newDate.getMonth() + 1); // Month (1-12, adding 1 because getMonth() is 0-indexed)
+console.log(newDate.getDate()); // Day of month (1-31)
+console.log(newDate.getDay()); // Day of week (0-6, 0 = Sunday)
+console.log(newDate.getFullYear()); // Full year (4 digits)
 ```
 
 ##### **3.2 Getting Time Components**
@@ -193,6 +208,12 @@ date.valueOf(); // Same as getTime()
 // Static methods
 Date.now(); // Current timestamp
 Date.parse('2023-10-04T12:00:00Z'); // Parse to timestamp
+
+// Timestamp conversions
+let myTimeStamp = Date.now();
+console.log(myTimeStamp); // Current timestamp in milliseconds
+console.log(myCreatedDate.getTime()); // Timestamp from date object
+console.log(Math.floor(Date.now() / 1000)); // Convert to seconds
 ```
 
 #### **4. Date Methods - Setters**
